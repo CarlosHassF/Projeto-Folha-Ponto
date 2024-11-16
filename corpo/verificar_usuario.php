@@ -11,7 +11,7 @@ require("../config/conn.php");
 
         $ids = $connect->fetch_assoc();
         $_SESSION["id_user"] = $ids['ID_F'];
-
+        
         if(mysqli_num_rows($connect)==0){
             echo "erro";
             header("Location:registrar_usuario.php");   

@@ -1,8 +1,14 @@
 <?php
 require("../config/conn.php");
-session_start();
+    session_start();
+
+   
 
 $rus = $_SESSION['id_user'];
+
+if(!$rus){
+    header("Location:registrar_usuario.php");
+}
 $horas = null;
 if (isset($_POST["Data"])) {
     $data = $_POST["Data"];
