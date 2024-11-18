@@ -20,9 +20,9 @@
             <form action="verificar_usuario.php" method="POST" style="width:100%; height:300px; display: flex; flex-direction:column; display:flex; align-items:center; justify-content:center;">
                 <h3>ENTRAR</h3>
                 <label for="email-usuario">Email</label>
-                <input type="email" name="email-usuario" id="email">
+                <input type="email" name="email-usuario" id="email" required>
                 <label for="password-usuario">Senha</label>
-                <input type="password" name="password-usuario" id="password">
+                <input type="password" name="password-usuario" id="password" required>
                 <button class="btn btn-secondary" type="submit" style="margin-top: 20px;">Entrar</button>
             </form>
         </div>
@@ -31,11 +31,11 @@
             <form action="cadastrar.php" method="POST"  style=" margin-top:20px; width:100%; height:300px; display: flex; flex-direction:column; display:flex; align-items:center; justify-content:center;">
                  <h3>NOVO USUARIO</h3>
                 <label for="nome">Nome</label>
-                <input type="nome" name="nome" id="nome">
+                <input type="nome" name="nome" id="nome" required>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" required>
                 <label for="password">Senha</label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" required>
                 <button class="btn btn-secondary" type="submit"  style="margin-top:20px; ">Cadastrar Usuario</button>
 
             </form>
