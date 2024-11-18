@@ -1,45 +1,43 @@
 <?php
 require("../config/conn.php");
-    session_start();
+session_start();
 
-   
-
-$rus = $_SESSION['id_user'];
-
-if(!$rus){
-    header("Location:registrar_usuario.php");
+$id = $_SESSION['id_user'];
+if (!$id) {
+    header("Location: registrar_usuario.php");
+    exit();
 }
-$horas = null;
+
 if (isset($_POST["Data"])) {
     $data = $_POST["Data"];
     $entrada1 = $_POST["Entrada1"];
     $entrada2 = $_POST["Entrada2"];
     $saida1 = $_POST["Saida1"];
     $saida2 = $_POST["Saida2"];
-    
-    $insert = $conn->query("INSERT INTO pontos(ENTRADA, SAIDA, ID_FUN, DIA, SAIDA2, ENTRADA2) VALUES('$entrada1', '$saida1', '$rus', '$data', '$saida2', '$entrada2')");
+
+    $conn->query("INSERT INTO pontos (ENTRADA, SAIDA, ID_FUN, DIA, SAIDA2, ENTRADA2) 
+                  VALUES ('$entrada1', '$saida1', '$id', '$data', '$saida2', '$entrada2')");
     header("location:" . $_SERVER['PHP_SELF']);
 }
 
-$verify = $conn->query("SELECT * FROM pontos WHERE ID_FUN = $rus");
+$verify = $conn->query("SELECT * FROM pontos WHERE ID_FUN = $id");
 $recebe = $verify->fetch_all(MYSQLI_ASSOC);
 
 if (isset($_POST["Data"])) {
-    foreach ($recebe as $key => $registro) {
+    foreach ($recebe as $registro) {
         $entrada1 = strtotime($registro['ENTRADA']);
         $saida1 = strtotime($registro['SAIDA']);
         $entrada2 = strtotime($registro['ENTRADA2']);
         $saida2 = strtotime($registro['SAIDA2']);
 
         $saldo = ($saida1 - $entrada1) + ($saida2 - $entrada2);
+        $saldo = gmdate('H:i:s', $saldo);
 
-        $saldo = gmdate('h:i:s', $saldo);
-        $query = "UPDATE pontos SET HORAS_TRABALHADAS = '$saldo' WHERE ID_FUN = $rus AND DIA = '{$registro['DIA']}'";
-        $conn->query($query);
+        $conn->query("UPDATE pontos 
+                      SET HORAS_TRABALHADAS = '$saldo' 
+                      WHERE ID_FUN = $id AND DIA = '{$registro['DIA']}'");
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +49,6 @@ if (isset($_POST["Data"])) {
     <title>Folha de Ponto</title>
 </head>
 <body>
-    
     <div id="app">
         <div class="container" style="width:100vw; height:100vh; display:grid; place-items:center; text-align:center;">
             <h1>Registros</h1>
@@ -59,14 +56,12 @@ if (isset($_POST["Data"])) {
                 <table class="table">
                     <thead>
                         <tr>
-                            <strong>
                             <th>Data</th>
                             <th>Entrada</th>
                             <th>Saída Pausa</th>
                             <th>Entrada Pausa</th>
                             <th>Saída</th>
                             <th>Horas Trabalhadas</th>
-                            </strong>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,14 +80,14 @@ if (isset($_POST["Data"])) {
                 </table>
             </div>
             <div style="width: 400px; margin:0; display:inline-block">
-            <a href="criar_registro.php"><button class="btn btn-primary" style="background-color: green; border-color:green; margin:20px;">Novo Registro</button></a>
-             <a href="registrar_usuario.php"><button class="btn btn-primary" style="background-color: green, border-color;">Sair</button></a>
-
-
+                <a href="criar_registro.php">
+                    <button class="btn btn-primary" style="background-color: green; border-color:green; margin:20px;">Novo Registro</button>
+                </a>
+                <a href="registrar_usuario.php">
+                    <button class="btn btn-primary" style="background-color: green;">Sair</button>
+                </a>
+            </div>
         </div>
-        </div>
-        
-        
     </div>
 </body>
 </html>
@@ -114,7 +109,7 @@ const app = Vue.createApp({
                 body: `id=${id}`
             })
             .then(response => response.text())
-            .then(data => {
+            .then(() => {
                 location.reload();
             })
             .catch(error => console.error('Erro:', error));
@@ -122,5 +117,4 @@ const app = Vue.createApp({
     }
 });
 app.mount('#app');
-
 </script>
