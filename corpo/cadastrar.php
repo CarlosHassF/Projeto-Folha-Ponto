@@ -19,7 +19,6 @@
         }else{
 
         header("Location:registrar_usuario.php");
-        
     }
 
 ?>

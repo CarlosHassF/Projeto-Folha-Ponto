@@ -8,13 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Registro de usuario</title>
 </head>
 <body>
 
     
     <div id="app">
-    <div class="contaier" style="width:100vw; height:30vh; text-align:center; display:flex; align-items:center; justify-content:center;">
+    <div class="container" style="width:100vw; height:30vh; text-align:center; display:flex; align-items:center; justify-content:center;">
         <div id = "usuario_antigo" v-show="antigo">
             
             <form action="verificar_usuario.php" method="POST" style="width:100%; height:300px; display: flex; flex-direction:column; display:flex; align-items:center; justify-content:center;">
