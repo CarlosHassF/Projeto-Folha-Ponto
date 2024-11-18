@@ -27,7 +27,7 @@
                 <input type="time" class="form-control" name="Saida2" placeholder="00:00">
   
             <button class="btn btn-primary btn-lg" type="submit" style="align-self:auto;white-space: nowrap; margin:20px">Criar Registro</button>
-    </div>
+        </div>
     </form>
 
     
