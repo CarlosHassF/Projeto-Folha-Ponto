@@ -57,8 +57,8 @@
     const app = Vue.createApp({
     data() {
         return{
-            antigo:false,
-            novo:true,
+            antigo:true,
+            novo:false,
         }
     },
     methods: {
