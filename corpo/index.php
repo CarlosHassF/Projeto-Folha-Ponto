@@ -8,20 +8,31 @@ if (!$id) {
     exit();
 }
 
+
+
 if (isset($_POST["Data"])) {
     $data = $_POST["Data"];
     $entrada1 = $_POST["Entrada1"];
     $entrada2 = $_POST["Entrada2"];
     $saida1 = $_POST["Saida1"];
     $saida2 = $_POST["Saida2"];
-
-    $conn->query("INSERT INTO pontos (ENTRADA, SAIDA, ID_FUN, DIA, SAIDA2, ENTRADA2) 
+    $verifica_dia = $conn->query("SELECT * FROM pontos WHERE DIA = '$data' AND ID_FUN = '$id'");
+    if(mysqli_num_rows($verifica_dia)==0){
+        $conn->query("INSERT INTO pontos (ENTRADA, SAIDA, ID_FUN, DIA, SAIDA2, ENTRADA2) 
                   VALUES ('$entrada1', '$saida1', '$id', '$data', '$saida2', '$entrada2')");
-    header("location:" . $_SERVER['PHP_SELF']);
+        header("location:" . $_SERVER['PHP_SELF']);
+    }else{
+       
+        echo "<script>alert('Já existe um registro com esse dia')</script>";
+        header("location:" . $_SERVER['PHP_SELF']);
+    }
+    
 }
 
 $verify = $conn->query("SELECT * FROM pontos WHERE ID_FUN = $id");
 $recebe = $verify->fetch_all(MYSQLI_ASSOC);
+
+
 
 if (isset($_POST["Data"])) {
     foreach ($recebe as $registro) {
@@ -33,9 +44,11 @@ if (isset($_POST["Data"])) {
         $saldo = ($saida1 - $entrada1) + ($saida2 - $entrada2);
         $saldo = gmdate('H:i:s', $saldo);
 
+  
         $conn->query("UPDATE pontos 
                       SET HORAS_TRABALHADAS = '$saldo' 
-                      WHERE ID_FUN = $id AND DIA = '{$registro['DIA']}'");
+                      WHERE DIA = '{$registro['DIA']}'");
+
     }
 }
 ?>
@@ -72,6 +85,7 @@ if (isset($_POST["Data"])) {
                             <td>{{ item.ENTRADA2 }}</td>
                             <td>{{ item.SAIDA2 }}</td>
                             <td>{{ item.HORAS_TRABALHADAS }}</td>
+                        
                             <td>
                                 <button class="btn btn-danger" @click="apagarRegistro(item.ID_P)">Excluir</button>
                             </td>
@@ -84,7 +98,7 @@ if (isset($_POST["Data"])) {
                     <button class="btn btn-primary" style="background-color: green; border-color:green; margin:20px;">Novo Registro</button>
                 </a>
                 <a href="registrar_usuario.php">
-                    <button class="btn btn-primary" style="background-color: green;">Sair</button>
+                    <button class="btn btn-primary" style="background-color: red; border-color:red;">Sair</button>
                 </a>
             </div>
         </div>
@@ -96,7 +110,9 @@ if (isset($_POST["Data"])) {
 const app = Vue.createApp({
     data() {
         return {
-            registros: <?php echo json_encode($recebe); ?>
+            registros: <?php echo json_encode($recebe); ?>,
+            teste:{backgroundColor:"green"},
+            data:"",
         };
     },
     methods: {
@@ -112,9 +128,9 @@ const app = Vue.createApp({
             .then(() => {
                 location.reload();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => console.error('Erro:', erro));
         }
-    }
+    },
 });
 app.mount('#app');
 </script>

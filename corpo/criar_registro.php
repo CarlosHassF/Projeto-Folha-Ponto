@@ -13,18 +13,18 @@
         
     <div class="container text-center" style="display:flex; flex-direction:row; flex-wrap:nowrap; align-items:center; justify-content:center;">  
                 <label for="Data" style="align-self: center; width:auto;margin:20px;">Dia</label>
-                <input type="DATE" class="form-table"style="width: 10%;" name="Data">
+                <input type="DATE" class="form-table"style="width: 10%;" name="Data" required>
 
                 <label for="Entrada1" style="align-self: center; width:auto;margin:20px;">ENTRADA</label>
-                <input type="time" class="form-control" name="Entrada1" placeholder="00:00">
+                <input type="time" class="form-control" name="Entrada1" placeholder="00:00" required>
 
                 <label for="Saida1" style="align-self: center; width:auto;margin:20px;white-space: nowrap;">Saida para Pausa</label>
-                <input type="time" class="form-control" name="Saida1" placeholder="00:00">
+                <input type="time" class="form-control" name="Saida1" placeholder="00:00" required>
 
                 <label for="Entrada2"  style="align-self:center;width:auto;margin:20px;white-space: nowrap;">Entrada da Pausa</label>
-                <input type="time" class="form-control" name="Entrada2" placeholder="00:00">
+                <input type="time" class="form-control" name="Entrada2" placeholder="00:00" required>
                 <label for="Saida2" style="align-self:center; width:auto;margin:20px;">SAIDA</label>
-                <input type="time" class="form-control" name="Saida2" placeholder="00:00">
+                <input type="time" class="form-control" name="Saida2" placeholder="00:00" required>
   
             <button class="btn btn-primary btn-lg" type="submit" style="align-self:auto;white-space: nowrap; margin:20px">Criar Registro</button>
         </div>
